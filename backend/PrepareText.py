@@ -4,7 +4,7 @@ import spacy
 import unidecode
 from gensim.models import Phrases
 from gensim.models.phrases import Phraser
-from backend.main import col_list
+from backendmain import col_list
 
 class PrepareText:
     pd.options.mode.chained_assignment = None
@@ -58,7 +58,7 @@ class PrepareText:
     def clean_special_without_polish(self):
         index = 0
         for line in self.doc['Text']:
-            line_clean_html = re.sub(r"https:(\/\/t\.co\/([A-Za-z0-9]|[A-Za-z]){10})", "", str(line))
+            line_clean_html = re.sub(r"https:(\/\/t\.co/([A-Za-z0-9]|[A-Za-z]){10})", "", str(line))
             line_clean_men = re.sub("@[A-Za-z0-9_]+", " ", str(line_clean_html))
             line_clean_hash = re.sub("#[A-Za-z0-9_]+", " ", str(line_clean_men))
             line_clean = re.sub("[^A-Za-złąśćężóń]+", ' ', str(line_clean_hash)).lower()
