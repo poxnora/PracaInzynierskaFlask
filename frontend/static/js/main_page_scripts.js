@@ -36,7 +36,8 @@ window.addEventListener('DOMContentLoaded', event => {
             target: '#mainNav',
             offset: 74,
         });
-    };
+    }
+    ;
 
     // Collapse responsive navbar when toggler is visible
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -56,22 +57,56 @@ window.addEventListener('DOMContentLoaded', event => {
         elements: '#portfolio a.portfolio-box'
     });
 
-    document.getElementById("adv").onclick = function() {
-more();
-};
+    document.getElementById("adv").onclick = function () {
+        more();
+    };
+
     function more(obj) {
         var button = document.getElementById("adv");
 
-    var content = document.getElementById("showMore");
-    if (content.style.display === "none") {
-        content.style.display = "";
-         button.style.color = "black";
+        var content = document.getElementById("showMore");
+        if (content.style.display === "none") {
+            content.style.display = "";
+            button.style.color = "#f4624a";
 
+        } else {
+            content.style.display = "none";
+            button.style.color = "white";
+
+        }
+    }
+
+});
+
+var slider = document.getElementById("max_value");
+var output = document.getElementById("max_posts");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function () {
+
+    if (slider.value === "100000") {
+        output.innerHTML = "100000+"
     } else {
-        content.style.display = "none";
-         button.style.color = "white";
-
+        output.innerHTML = this.value;
     }
 }
 
-});
+
+var input = document.getElementById("end_date");
+      var today = new Date();
+      var day = today.getDate();
+
+      // Set month to string to add leading 0
+      var mon = String(today.getMonth()+1); //January is 0!
+      var yr = today.getFullYear();
+
+        if(mon.length < 2) { mon = "0" + mon; }
+        if(day.length < 2) { dayn = "0" + day; }
+
+        var date = String( yr + '-' + mon + '-' + day );
+
+      input.disabled = false;
+      input.setAttribute('max', date);
+
+

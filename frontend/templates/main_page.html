@@ -1,3 +1,21 @@
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+         <script>
+      Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
+          </script>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endwith %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>Creative - Start Bootstrap Theme</title>
+    <title>Company Opinions</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Bootstrap Icons-->
@@ -18,12 +36,31 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{ url_for('views.static', filename='/css/main_page_style.css') }}" rel="stylesheet"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body id="page-top">
-<!-- Navigation-->
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+         <script>
+      Swal.fire({
+  title: 'Error!',
+  text: '{{message}}',
+  icon: 'error',
+  confirmButtonText: 'Ok'
+})
+          </script>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endwith %}
 <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+        <a class="navbar-brand" href="#page-top">Company Opinions</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -31,8 +68,7 @@
             <ul class="navbar-nav ms-auto my-2 my-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#start">Start</a></li>
             </ul>
         </div>
     </div>
@@ -62,7 +98,7 @@
                 <hr class="divider divider-light"/>
                 <p class="text-white-75 mb-4">Thanks to our advanced algorithms we analise posts and present you with
                     summary of the company's standing</p>
-                <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+                <a class="btn btn-light btn-xl" href="#services">What we offer?</a>
             </div>
         </div>
     </div>
@@ -101,11 +137,20 @@
                     <p class="text-muted mb-0">We do not hide any costs</p>
                 </div>
             </div>
+
         </div>
+
+    </div>
+    <br>
+    <br><br>
+
+    <div class=" text-center">
+
+        <a class="btn btn-primary btn-xl" href="#start">Let's Start!</a>
     </div>
 </section>
 
-<section class="page-section bg-secondary" id="contact">
+<section class="page-section bg-secondary" id="start">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-lg-8 col-xl-6 text-center">
@@ -122,49 +167,45 @@
                 <!-- To make this form functional, sign up at-->
                 <!-- https://startbootstrap.com/solution/contact-forms-->
                 <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                <form action="/search" method="post" id="contactForm">
                     <!-- Name input-->
                     <div class="form-floating mb-3">
 
-                        <input class="form-control" id="query" type="text" placeholder="Company's name"
-                               data-sb-validations="required"/>
-                        <label for="query">Company</label>
-
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        <input required="required" name="query" class="form-control" id="query" type="text" placeholder="Company's name"
+                        />
+                        <label for="query">Company's name</label>
                     </div>
 
                     <div class="d-grid">
-                        <a class="btn btn-primary btn-xl bg-secondary" id="adv" href="#contact">Advanced</a>
+                        <a class="btn btn-primary btn-xl bg-secondary" id="adv">Advanced</a>
                     </div>
                     <div id="showMore" style="display: none">
+                        <div>
+                            <b><label for="customRange1" class="form-label mt-0 text-white">Maximum number of posts
+                                - </label>
+                                <label id="max_posts" class="form-label mt-0 text-white"></label></b>
+                            <input name="max_value" min="5000" max="100000" value="10000" type="range"
+                                   class="form-range"
+                                   id="max_value">
 
-                        <label for="customRange1" class="form-label">Example range</label>
-                        <input type="range" class="form-range" id="customRange1">
-                       <div class="gx-lg-4">
-                        <label for="start_date"></label>
-                        <input class="form-control" type="datetime-local" id="start_date">
-                        <label for="end_date"></label><input class="form-control" type="datetime-local" id="end_date">
-
-                       </div>
+                        </div>
+                        <div class="gx-lg-4">
+                            <b>
+                                <br>
+                                <label for="start_date" class="form-label mt-0 text-white">Start date</label>
+                                <input name="start_date" class="form-control" type="date" id="start_date"><br>
+                                <label for="end_date" class="form-label mt-0 text-white">End date</label><input
+                                    name="end_date" class="form-control" type="date" id="end_date">
+                            </b>
+                        </div>
                         <br>
-                        <label class="form-check-label" for="check" >Advanced query</label>
-                        <input class="form-check-input " type="checkbox" id="check" name="vehicle2">
-
+                        <b>
+                            <label class="form-label mt-0 text-white" for="check">Advanced query</label>
+                            <input class="form-check-input " style="margin-left: 2%" type="checkbox" name="check" id="check"
+                            >
+                        </b>
                     </div>
                     <br>
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br/>
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                        </div>
-                    </div>
-
-                    <div class="d-none" id="submitErrorMessage">
-                        <div class="text-center text-danger mb-3">Error sending message!</div>
-                    </div>
-
                     <div class="d-grid">
                         <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Submit</button>
                     </div>
@@ -177,7 +218,7 @@
 <!-- Footer-->
 <footer class="bg-light py-5">
     <div class="container px-4 px-lg-5">
-        <div class="small text-center text-muted">Copyright &copy; 2022 - Company Name</div>
+        <div class="small text-center text-muted">Copyright &copy; 2022 - Company Opinions</div>
     </div>
 </footer>
 <!-- Bootstrap core JS-->
