@@ -1,0 +1,27 @@
+version: '3.6'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    env_file: database.conf
+    ports:
+      - "5433:5432"
+    volumes:
+      - db_volume:/var/lib/postgresql
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user
+      PGADMIN_DEFAULT_PASSWORD: user
+    networks:
+      - app-network
+
+volumes:
+  db_volume:
+networks:
+  app-network:
+    driver: bridge

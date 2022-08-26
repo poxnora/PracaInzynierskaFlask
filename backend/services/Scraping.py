@@ -5,7 +5,7 @@ import pandas as pd
 
 
 def get_tweets(query, n, start, end):
-    path = os.path.join(__file__, "../..", 'backend', 'tweets')
+    path = os.path.join(__file__, "../../..", 'backend', 'tweets')
     posts = []
     for i, tweet in enumerate(sntwitter.TwitterSearchScraper(query).get_items()):
         max = int(n)

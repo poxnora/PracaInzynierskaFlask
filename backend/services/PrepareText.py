@@ -4,7 +4,7 @@ import spacy
 import unidecode
 from gensim.models import Phrases
 from gensim.models.phrases import Phraser
-from backendmain import col_list
+from Backendmain import col_list
 
 class PrepareText:
     pd.options.mode.chained_assignment = None
@@ -15,7 +15,7 @@ class PrepareText:
 
     def copy(self):
         self.doc.to_csv('tweets/PKOstcopy.csv', sep=';', index=False)
-        copy_csv = pd.read_csv('tweets/PKOstcopy.csv', delimiter=';', usecols=col_list)
+        copy_csv = pd.read_csv('../tweets/PKOstcopy.csv', delimiter=';', usecols=col_list)
         return copy_csv
 
     def lemmatization(self):
@@ -26,7 +26,7 @@ class PrepareText:
         return self.doc
 
     def remove_stop_words(self):
-        stop_words = open("data/polish.stopwords.txt", "r", encoding='utf-8')
+        stop_words = open("../data/polish.stopwords.txt", "r", encoding='utf-8')
         index = 0
         for line in self.doc['Text']:
             line_copy = line

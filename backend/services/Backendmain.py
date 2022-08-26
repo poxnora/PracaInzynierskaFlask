@@ -34,7 +34,7 @@ prepare = PrepareText(csv)
 prepare.prepare().to_csv('tweets/PKOclean.csv', sep=';', index=False)
 """
 
-copy_clean = pd.read_csv('tweets/PKOstcopysentencespol.csv', delimiter=';', usecols=col_list_with_label)
+copy_clean = pd.read_csv('../tweets/PKOstcopysentencespol.csv', delimiter=';', usecols=col_list_with_label)
 calculator = Calculate(copy_clean,5)
 plots = Plots()
 plots.sentiment_plot(calculator.each_day_sentiment_mean())

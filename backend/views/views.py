@@ -1,18 +1,22 @@
 import os
 import re
 
-from flask import Flask, render_template, request, Blueprint, flash
+from flask import Blueprint, render_template, request, flash
 
-from backend import Scraping
+from backend.configuration.Config import Config
+from backend.services import Scraping
 
-views_blueprint = Blueprint('views', __name__,template_folder=(os.path.abspath(os.path.join(__file__, "../..",'frontend','templates'))), static_folder=(os.path.abspath(os.path.join(__file__, "../..",'frontend','static'))))
+views_blueprint = Blueprint('views', __name__,
+                            template_folder=Config.TEMPLATES_FOLDER,
+                            static_folder=Config.STATIC_FOLDER)
+
 
 @views_blueprint.route('/')
 def main():
     return render_template('main_page.html')
 
 
-@views_blueprint.route('/search',  methods=['POST'])
+@views_blueprint.route('/search', methods=['POST'])
 def search():
     if request.method == "POST":
         query = request.form.get('query')
@@ -24,6 +28,6 @@ def search():
             flash("Invalid company!")
         if advanced != "on":
             query = query.replace(" ", "")
-            query = "#"+query
-        Scraping.get_tweets(query,max_value,start,end)
+            query = "#" + query
+        Scraping.get_tweets(query, max_value, start, end)
         return render_template('main_page.html')

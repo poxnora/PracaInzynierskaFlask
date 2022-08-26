@@ -1,4 +1,4 @@
-"""
+
 import pandas as pd
 import plotly.graph_objects as go
 
@@ -27,4 +27,3 @@ class Plots:
             yaxis_rangemode='nonnegative'
         )
         self.fig.show(condig=self.config)
-"""
