@@ -8,6 +8,8 @@ services:
       - "5433:5432"
     volumes:
       - db_volume:/var/lib/postgresql
+    networks:
+      - app-network
   pgadmin:
     image: dpage/pgadmin4
     depends_on:
@@ -15,7 +17,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: user
+      PGADMIN_DEFAULT_EMAIL: user@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: user
     networks:
       - app-network

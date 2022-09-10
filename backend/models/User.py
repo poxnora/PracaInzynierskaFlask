@@ -1,11 +1,12 @@
-
+from flask_login import UserMixin
 from sqlalchemy import func
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from backend.configuration.database import db
+from backend.configuration.login import login_manager
 
 
-class User(db.Model):
+class User(UserMixin,db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50), nullable=False)
@@ -28,3 +29,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User id:{self.id}>'
+
+@login_manager.user_loader
+def load_user(id):
+    return User.query.get(int(id))
