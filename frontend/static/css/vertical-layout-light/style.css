@@ -9232,6 +9232,10 @@ progress {
   text-transform: uppercase;
 }
 
+.back_login{
+  background: #5C4D42CC;
+}
+
 .blockquote {
   margin-bottom: 1rem;
   font-size: 1.25rem;
